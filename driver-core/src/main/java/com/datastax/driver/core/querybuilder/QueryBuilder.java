@@ -19,6 +19,7 @@ import java.util.*;
 
 import com.datastax.driver.core.RegularStatement;
 import com.datastax.driver.core.TableMetadata;
+import com.datastax.driver.core.exceptions.InvalidQueryException;
 
 /**
  * Static methods to build a CQL3 query.
@@ -734,8 +735,10 @@ public final class QueryBuilder {
      * @return the correspond assignment (to use in an update query)
      */
     public static Assignment add(String name, Object value) {
-        Object v = value instanceof BindMarker ? value : Collections.singleton(value);
-        return new Assignment.CollectionAssignment(name, v, true);
+        if (value instanceof BindMarker){
+            throw new InvalidQueryException("You cannot add a single value in a set and bind it later, you should use addAll() to create a prepared statement for a updating a Set.");
+        }
+        return new Assignment.CollectionAssignment(name, Collections.singleton(value), true);
     }
 
     /**
