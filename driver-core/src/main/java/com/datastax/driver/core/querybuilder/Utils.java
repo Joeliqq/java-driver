@@ -30,7 +30,7 @@ import com.datastax.driver.core.UDTValue;
 // Static utilities private to the query builder
 abstract class Utils {
 
-    private static final Pattern cnamePattern = Pattern.compile("\\w+(?:\\[.+\\])?");
+    private static final Pattern cnamePattern = Pattern.compile("\\w+(((\\.|!| )\\w+)?|\\((\\w+)?\\)|(?:\\[.+\\])?)?");
 
     static StringBuilder joinAndAppend(StringBuilder sb, String separator, List<? extends Appendeable> values, List<Object> variables) {
         for (int i = 0; i < values.size(); i++) {
