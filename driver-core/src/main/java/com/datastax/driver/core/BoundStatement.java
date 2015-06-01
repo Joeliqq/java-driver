@@ -528,8 +528,8 @@ public class BoundStatement extends Statement implements SettableData<BoundState
      * @throws IndexOutOfBoundsException if {@code i} is not a valid index for this object.
      * @throws InvalidTypeException if value {@code i} is not of type DATE.
      */
-    public BoundStatement setDateWithoutTime(int i, DateWithoutTime v) {
-        return wrapper.setDateWithoutTime(i, v);
+    public BoundStatement setDate(int i, DateWithoutTime v) {
+        return wrapper.setDate(i, v);
     }
 
     /**
@@ -545,8 +545,8 @@ public class BoundStatement extends Statement implements SettableData<BoundState
      * @throws InvalidTypeException if (any occurrence of) {@code name} is
      * not of type DATE.
      */
-    public BoundStatement setDateWithoutTime(String name, DateWithoutTime v) {
-        return wrapper.setDateWithoutTime(name, v);
+    public BoundStatement setDate(String name, DateWithoutTime v) {
+        return wrapper.setDate(name, v);
     }
 
     /**
@@ -1284,21 +1284,6 @@ public class BoundStatement extends Statement implements SettableData<BoundState
     /**
      * {@inheritDoc}
      */
-    @Deprecated
-    public Date getDate(int i) {
-        return wrapper.getTimestamp(i);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Date getDate(String name) {
-        return wrapper.getTimestamp(name);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public Date getTimestamp(int i) {
         return wrapper.getTimestamp(i);
     }
@@ -1313,15 +1298,15 @@ public class BoundStatement extends Statement implements SettableData<BoundState
     /**
      * {@inheritDoc}
      */
-    public DateWithoutTime getDateWithoutTime(int i) {
-        return wrapper.getDateWithoutTime(i);
+    public DateWithoutTime getDate(int i) {
+        return wrapper.getDate(i);
     }
 
     /**
      * {@inheritDoc}
      */
-    public DateWithoutTime getDateWithoutTime(String name) {
-        return wrapper.getDateWithoutTime(name);
+    public DateWithoutTime getDate(String name) {
+        return wrapper.getDate(name);
     }
 
     /**

@@ -110,20 +110,6 @@ public interface GettableByIndexData {
      *
      * @throws IndexOutOfBoundsException if {@code i} is not a valid index for this object.
      * @throws InvalidTypeException if value {@code i} is not of type TIMESTAMP.
-     * @deprecated deprecated in favor of {@link #getTimestamp(int)}
-     */
-    @Deprecated
-    public Date getDate(int i);
-
-    /**
-     * Returns the {@code i}th value as a date.
-     *
-     * @param i the index ({@code 0 <= i < size()}) to retrieve.
-     * @return the value of the {@code i}th element as a data. If the
-     * value is NULL, {@code null} is returned.
-     *
-     * @throws IndexOutOfBoundsException if {@code i} is not a valid index for this object.
-     * @throws InvalidTypeException if value {@code i} is not of type TIMESTAMP.
      */
     public Date getTimestamp(int i);
 
@@ -137,7 +123,7 @@ public interface GettableByIndexData {
      * @throws IndexOutOfBoundsException if {@code i} is not a valid index for this object.
      * @throws InvalidTypeException if value {@code i} is not of type DATE.
      */
-    public DateWithoutTime getDateWithoutTime(int i);
+    public DateWithoutTime getDate(int i);
 
     /**
      * Returns the {@code i}th value as a long in nanoseconds since midnight.

@@ -173,14 +173,6 @@ abstract class AbstractGettableByIndexData implements GettableByIndexData {
      * {@inheritDoc}
      */
     @Override
-    public Date getDate(int i) {
-        return getTimestamp(i);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Date getTimestamp(int i)
     {
         checkType(i, DataType.Name.TIMESTAMP);
@@ -196,7 +188,7 @@ abstract class AbstractGettableByIndexData implements GettableByIndexData {
      * {@inheritDoc}
      */
     @Override
-    public DateWithoutTime getDateWithoutTime(int i) {
+    public DateWithoutTime getDate(int i) {
         checkType(i, DataType.Name.DATE);
 
         ByteBuffer value = getValue(i);
