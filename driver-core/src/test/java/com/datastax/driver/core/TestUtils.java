@@ -219,7 +219,7 @@ public abstract class TestUtils {
                 case TIMESTAMP:
                     return new Date(1352288289L);
                 case DATE:
-                    return new DateWithoutTime(0);
+                    return DateWithoutTime.fromDaysSinceEpoch(0);
                 case TIME:
                     return 54012123450000L;
                 case UUID:
@@ -281,7 +281,7 @@ public abstract class TestUtils {
                 case TIMESTAMP:
                     return new Date(872835240000L);
                 case DATE:
-                    return new DateWithoutTime(0);
+                    return DateWithoutTime.fromDaysSinceEpoch(0);
                 case TIME:
                     return 54012123450000L;
                 case UUID:

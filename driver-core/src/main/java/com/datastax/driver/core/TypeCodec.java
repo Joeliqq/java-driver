@@ -960,7 +960,7 @@ abstract class TypeCodec<T> {
 
                 int days = (int)(cqlLong - EPOCH_AS_CQL_LONG);
 
-                return new DateWithoutTime(days);
+                return DateWithoutTime.fromDaysSinceEpoch(days);
             }
 
             SimpleDateFormat parser = new SimpleDateFormat(pattern);
@@ -970,7 +970,7 @@ abstract class TypeCodec<T> {
             ParsePosition pos = new ParsePosition(0);
             Date date = parser.parse(value, pos);
             if (date != null && pos.getIndex() == value.length()) {
-                return DateWithoutTime.fromMillis(date.getTime());
+                return DateWithoutTime.fromMillisSinceEpoch(date.getTime());
             }
 
             throw new InvalidTypeException(String.format("Cannot parse date value from \"%s\"", value));
@@ -988,7 +988,7 @@ abstract class TypeCodec<T> {
 
         @Override
         public DateWithoutTime deserialize(ByteBuffer bytes) {
-            return new DateWithoutTime(protocolToJava(IntCodec.instance.deserializeNoBoxing(bytes)));
+            return DateWithoutTime.fromDaysSinceEpoch(protocolToJava(IntCodec.instance.deserializeNoBoxing(bytes)));
         }
 
         // The protocol encodes DATE as an _unsigned_ int with the epoch in the middle of the range (2^31).
