@@ -138,14 +138,6 @@ abstract class AbstractData<T extends SettableData<T>> extends AbstractGettableD
         return wrapped;
     }
 
-    public T setDate(int i, Date v) {
-        return setTimestamp(i, v);
-    }
-
-    public T setDate(String name, Date v) {
-        return setTimestamp(name, v);
-    }
-
     public T setTimestamp(int i, Date v) {
         checkType(i, DataType.Name.TIMESTAMP);
         return setValue(i, v == null ? null : TypeCodec.TimestampCodec.instance.serialize(v));
