@@ -51,8 +51,8 @@ abstract class TypeCodec<T> {
         primitiveCodecs.put(DataType.Name.SMALLINT,  SmallIntCodec.instance);
         primitiveCodecs.put(DataType.Name.INT,       IntCodec.instance);
         primitiveCodecs.put(DataType.Name.TEXT,      StringCodec.utf8Instance);
-        primitiveCodecs.put(DataType.Name.TIMESTAMP, DateCodec.instance);
-        primitiveCodecs.put(DataType.Name.DATE,      SimpleDateCodec.instance);
+        primitiveCodecs.put(DataType.Name.TIMESTAMP, TimestampCodec.instance);
+        primitiveCodecs.put(DataType.Name.DATE,      DateCodec.instance);
         primitiveCodecs.put(DataType.Name.TIME,      TimeCodec.instance);
         primitiveCodecs.put(DataType.Name.UUID,      UUIDCodec.instance);
         primitiveCodecs.put(DataType.Name.VARCHAR,   StringCodec.utf8Instance);
@@ -851,7 +851,7 @@ abstract class TypeCodec<T> {
         }
     }
 
-    static class DateCodec extends TypeCodec<Date> {
+    static class TimestampCodec extends TypeCodec<Date> {
 
         private static final String[] iso8601Patterns = new String[] {
             "yyyy-MM-dd HH:mm",
@@ -870,10 +870,10 @@ abstract class TypeCodec<T> {
             "yyyy-MM-ddZ"
         };
 
-        public static final DateCodec instance = new DateCodec();
+        public static final TimestampCodec instance = new TimestampCodec();
         private static final Pattern IS_LONG_PATTERN = Pattern.compile("^-?\\d+$");
 
-        private DateCodec() {}
+        private TimestampCodec() {}
 
         /*
          * Copied and adapted from apache commons DateUtils.parseStrictly method (that is used Cassandra side
@@ -933,15 +933,15 @@ abstract class TypeCodec<T> {
         }
     }
 
-    static class SimpleDateCodec extends TypeCodec<DateWithoutTime> {
+    static class DateCodec extends TypeCodec<DateWithoutTime> {
 
-        public static final SimpleDateCodec instance = new SimpleDateCodec();
+        public static final DateCodec instance = new DateCodec();
         private static final Pattern IS_LONG_PATTERN = Pattern.compile("^-?\\d+$");
         private static final String pattern = "yyyy-MM-dd";
         private static final long MAX_LONG_VALUE = (1L << 32) - 1;
         private static final long EPOCH_AS_CQL_LONG = (1L << 31);
 
-        private SimpleDateCodec() {}
+        private DateCodec() {}
 
         @Override
         public DateWithoutTime parse(String value) {

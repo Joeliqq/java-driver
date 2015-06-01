@@ -189,7 +189,7 @@ abstract class AbstractGettableByIndexData implements GettableByIndexData {
         if (value == null || value.remaining() == 0)
             return null;
 
-        return TypeCodec.DateCodec.instance.deserialize(value);
+        return TypeCodec.TimestampCodec.instance.deserialize(value);
     }
 
     /**
@@ -203,7 +203,7 @@ abstract class AbstractGettableByIndexData implements GettableByIndexData {
         if (value == null || value.remaining() == 0)
             return null;
 
-        return TypeCodec.SimpleDateCodec.instance.deserialize(value);
+        return TypeCodec.DateCodec.instance.deserialize(value);
     }
 
     /**
