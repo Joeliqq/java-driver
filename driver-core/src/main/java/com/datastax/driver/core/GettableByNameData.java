@@ -127,7 +127,7 @@ public interface GettableByNameData {
     public Date getTimestamp(String name);
 
     /**
-     * Returns the value for {@code name} as a date as an int in days since epoch.
+     * Returns the value for {@code name} as a date (without time).
      *
      * @param name the name to retrieve.
      * @return the value for {@code name} as a date. If the value is NULL,

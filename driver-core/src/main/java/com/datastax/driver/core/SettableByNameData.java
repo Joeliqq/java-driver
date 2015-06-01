@@ -133,7 +133,7 @@ public interface SettableByNameData<T extends SettableData<T>> {
 
     /**
      * Sets the value for (all occurrences of) variable {@code name} to the
-     * provided date as an int in days since epoch.
+     * provided date (without time).
      *
      * @param name the name of the value to set; if {@code name} is present multiple
      * times, all its values are set.

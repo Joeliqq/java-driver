@@ -19,9 +19,12 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.nio.*;
-import java.nio.charset.*;
-import java.text.*;
+import java.nio.BufferUnderflowException;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -941,7 +944,8 @@ abstract class TypeCodec<T> {
         private static final long MAX_LONG_VALUE = (1L << 32) - 1;
         private static final long EPOCH_AS_CQL_LONG = (1L << 31);
 
-        private DateCodec() {}
+        private DateCodec() {
+        }
 
         @Override
         public DateWithoutTime parse(String value) {
@@ -956,7 +960,7 @@ abstract class TypeCodec<T> {
                 }
                 if (cqlLong < 0 || cqlLong > MAX_LONG_VALUE)
                     throw new InvalidTypeException(String.format("Numeric literals for DATE must be between 0 and %d (got %d)",
-                                                                 MAX_LONG_VALUE, cqlLong));
+                        MAX_LONG_VALUE, cqlLong));
 
                 int days = (int)(cqlLong - EPOCH_AS_CQL_LONG);
 
@@ -1009,11 +1013,11 @@ abstract class TypeCodec<T> {
 
         public static final TimeCodec instance = new TimeCodec();
 
-        private TimeCodec() {}
+        private TimeCodec() {
+        }
 
         // Time specific parsing loosely based on java.sql.Timestamp
-        private static Long parseTime(String s) throws IllegalArgumentException
-        {
+        private static Long parseTime(String s) throws IllegalArgumentException {
             String nanos_s;
 
             long hour;
@@ -1030,12 +1034,11 @@ abstract class TypeCodec<T> {
 
             // Parse the time
             int firstColon = s.indexOf(':');
-            int secondColon = s.indexOf(':', firstColon+1);
+            int secondColon = s.indexOf(':', firstColon + 1);
 
             // Convert the time; default missing nanos
-            if (firstColon > 0 && secondColon > 0 && secondColon < s.length() - 1)
-            {
-                int period = s.indexOf('.', secondColon+1);
+            if (firstColon > 0 && secondColon > 0 && secondColon < s.length() - 1) {
+                int period = s.indexOf('.', secondColon + 1);
                 hour = Integer.parseInt(s.substring(0, firstColon));
                 if (hour < 0 || hour >= 24)
                     throw new IllegalArgumentException("Hour out of bounds.");
@@ -1044,8 +1047,7 @@ abstract class TypeCodec<T> {
                 if (minute < 0 || minute >= 60)
                     throw new IllegalArgumentException("Minute out of bounds.");
 
-                if (period > 0 && period < s.length() - 1)
-                {
+                if (period > 0 && period < s.length() - 1) {
                     second = Integer.parseInt(s.substring(secondColon + 1, period));
                     if (second < 0 || second >= 60)
                         throw new IllegalArgumentException("Second out of bounds.");
@@ -1057,17 +1059,14 @@ abstract class TypeCodec<T> {
                         throw new IllegalArgumentException(formatError);
                     nanos_s = nanos_s + zeros.substring(0, 9 - nanos_s.length());
                     a_nanos = Integer.parseInt(nanos_s);
-                }
-                else if (period > 0)
+                } else if (period > 0)
                     throw new IllegalArgumentException(formatError);
-                else
-                {
+                else {
                     second = Integer.parseInt(s.substring(secondColon + 1));
                     if (second < 0 || second >= 60)
                         throw new IllegalArgumentException("Second out of bounds.");
                 }
-            }
-            else
+            } else
                 throw new IllegalArgumentException(formatError);
 
             long rawTime = 0;

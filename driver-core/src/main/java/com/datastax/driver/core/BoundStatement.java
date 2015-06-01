@@ -519,7 +519,7 @@ public class BoundStatement extends Statement implements SettableData<BoundState
     }
 
     /**
-     * Set the {@code i}th value to the provided date as an int in days since epoch.
+     * Set the {@code i}th value to the provided date.
      *
      * @param i the index of the value to set.
      * @param v the value to set.
@@ -534,7 +534,7 @@ public class BoundStatement extends Statement implements SettableData<BoundState
 
     /**
      * Sets the value for (all occurrences of) variable {@code name} to the
-     * provided date as an int in days since epoch.
+     * provided date.
      *
      * @param name the name of the value to set; if {@code name} is present multiple
      * times, all its values are set.

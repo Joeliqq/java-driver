@@ -115,7 +115,7 @@ public interface SettableByIndexData<T extends SettableByIndexData<T>> {
     public T setTimestamp(int i, Date v);
 
     /**
-     * Set the {@code i}th value to the provided date as an int in days since epoch.
+     * Set the {@code i}th value to the provided date (without time).
      *
      * @param i the index of the value to set.
      * @param v the value to set.

@@ -128,10 +128,10 @@ public interface GettableByIndexData {
     public Date getTimestamp(int i);
 
     /**
-     * Returns the {@code i}th value as a date as an int in days since epoch.
+     * Returns the {@code i}th value as a date (without time).
      *
      * @param i the index ({@code 0 <= i < size()}) to retrieve.
-     * @return the value of the {@code i}th element as an int. If the
+     * @return the value of the {@code i}th element as an date. If the
      * value is NULL, {@code null} is returned.
      *
      * @throws IndexOutOfBoundsException if {@code i} is not a valid index for this object.

@@ -257,10 +257,10 @@ public interface Row extends GettableData {
     public Date getTimestamp(String name);
 
     /**
-     * Returns the {@code i}th value as a date as an int in days since epoch.
+     * Returns the {@code i}th value as a date (without time).
      *
      * @param i the index ({@code 0 <= i < size()}) to retrieve.
-     * @return the value of the {@code i}th element as a data. If the
+     * @return the value of the {@code i}th element as a date. If the
      * value is NULL, {@code null} is returned.
      *
      * @throws IndexOutOfBoundsException if {@code i} is not a valid index for this object.
@@ -270,7 +270,7 @@ public interface Row extends GettableData {
     public DateWithoutTime getDateWithoutTime(int i);
 
     /**
-     * Returns the value for {@code name} as a date as an int in days since epoch.
+     * Returns the value for {@code name} as a date (without time).
      *
      * @param name the name to retrieve.
      * @return the value for {@code name} as a date. If the value is NULL,
