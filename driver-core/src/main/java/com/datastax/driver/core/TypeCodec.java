@@ -992,20 +992,14 @@ abstract class TypeCodec<T> {
         }
 
         // The protocol encodes DATE as an _unsigned_ int with the epoch in the middle of the range (2^31).
-        // Because ByteBuffer does not have a `getUnsignedInt` method, we read those 4 bytes as a signed int
-        // and convert it. In addition, we shift the value to have the epoch at 0 like is usual in Java.
+        // We read this with ByteBuffer#getInt which expects a signed int, and we want epoch at 0.
         // These two methods handle the conversions.
-
         private static int protocolToJava(int p) {
-            return (p >= 0)
-                   ? Integer.MIN_VALUE + p
-                   : Integer.MAX_VALUE + p + 1;
+            return p + Integer.MIN_VALUE; // this relies on overflow for "negative" values
         }
 
         private static int javaToProtocol(int j) {
-            return (j >= 0)
-                   ? j - Integer.MIN_VALUE
-                   : j - Integer.MAX_VALUE - 1;
+            return j - Integer.MIN_VALUE;
         }
     }
 
