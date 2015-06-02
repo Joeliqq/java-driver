@@ -84,28 +84,25 @@ public final class DateWithoutTime {
     /**
      * Builds a new instance from a year/month/day specification.
      *
-     * Note that, for internal implementation reasons, the month and day are not lenient
-     * (in fact, the day is still lenient if <= 31, but this class makes no guarantee
-     * that this will remain true in the future).
+     * This method is not lenient, i.e. '2014-12-32' will not be treated as '2015-01-01', but
+     * instead throw an {@code IllegalArgumentException}.
      *
-     * @param year the year in ISO format ({@link DateWithoutTime this class's Javadoc}).
-     * @param month the month. It is 1-based (e.g. 1 for January) and not lenient.
+     * @param year the year in ISO format (see {@link DateWithoutTime this class's Javadoc}).
+     * @param month the month. It is 1-based (e.g. 1 for January).
      * @param dayOfMonth the day of the month.
      *
      * @return the new instance.
      *
-     * @throws IllegalArgumentException if the date is not in the range [-5877641-06-23; 5881580-07-11],
-     * or the month is not between 1 and 12, or the day is not between 1 and 31.
+     * @throws IllegalArgumentException if the corresponding date does not exist in the ISO8601
+     * calendar.
      */
     public static DateWithoutTime fromYearMonthDay(int year, int month, int dayOfMonth) {
-        // We can't allow leniency because that could mess with our year shift below
-        checkArgument(month >= 1 && month <= 12, "Month must be between 1 and 12");
-        checkArgument(dayOfMonth >= 1 && dayOfMonth <= 31, "Day must be between 1 and 31");
-
         int calendarYear = (year <= 0) ? -year + 1 : year;
         int calendarEra = (year <= 0) ? GregorianCalendar.BC : GregorianCalendar.AD;
 
         GregorianCalendar calendar = isoCalendar();
+        // We can't allow leniency because that could mess with our year shift above (for example if the arguments were 0, 12, 32)
+        calendar.setLenient(false);
         calendar.clear();
         calendar.set(calendarYear, month - 1, dayOfMonth, 0, 0, 0);
         calendar.set(Calendar.ERA, calendarEra);
